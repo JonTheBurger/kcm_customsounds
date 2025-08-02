@@ -1,0 +1,18 @@
+{
+    "KPlugin": {
+        "Description": "Custom System Sounds",
+        "Description[x-test]": "xxCustom System Soundsxx",
+        "FormFactors": [
+            "desktop",
+            "handset",
+            "tablet",
+            "mediacenter"
+        ],
+        "Icon": "preferences-sound",
+        "Name": "Custom System Sounds",
+        "Name[x-test]": "xxCustom System Soundsxx"
+    },
+    "X-KDE-Keywords": "Sound",
+    "X-KDE-Keywords[x-test]": "xxSoundxx",
+    "X-KDE-System-Settings-Parent-Category": "appearance-and-behavior"
+}
