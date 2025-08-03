@@ -1,10 +1,3 @@
-# ecm_qt_declare_logging_category(${PROJECT_NAME}
-#     HEADER customsounds_debug.h
-#     IDENTIFIER CUSTOMSOUNDS_DEBUG
-#     CATEGORY_NAME org.kde.kcm_customsounds
-#     DESCRIPTION "KCM Custom Sounds"
-#     EXPORT CUSTOMSOUNDS
-# )
 # ecm_qt_export_logging_category(
 #     IDENTIFIER "CUSTOMSOUNDS_DEBUG"
 #     CATEGORY_NAME "myproject.submodule"
@@ -36,4 +29,12 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     KF6::CoreAddons
     KF6::KCMUtils
     KF6::I18n
+
+    Qt6::Quick
+    Qt6::DBus
+    KF6::I18n
+    KF6::KCMUtilsQuick
+    KF6::ConfigCore
+    KF6::ConfigGui
+    KF6::ConfigQml
 )

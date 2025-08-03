@@ -1,6 +1,5 @@
 {
     "KPlugin": {
-        "Id": "kcm_customsounds",
         "Description": "Custom System Sounds",
         "Description[x-test]": "xxCustom System Soundsxx",
         "FormFactors": [

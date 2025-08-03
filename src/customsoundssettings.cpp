@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QStandardPaths>
 #include <QtLogging>
+#include <QQmlApplicationEngine>
 
 K_PLUGIN_CLASS_WITH_JSON(CustomSoundsSettings, "kcm_customsounds.json") // NOLINT
 
@@ -12,7 +13,12 @@ CustomSoundsSettings::CustomSoundsSettings(QObject *parent, const KPluginMetaDat
     , m_statusText{QStringLiteral("TESTING")}
     , m_themes{QStringLiteral("Default"), QStringLiteral("Custom")}
 {
-  setButtons(Help);
+    // Q_EMIT themesChanged();
+
+    // QQmlApplicationEngine* engine = QQmlApplicationEngine::installExtensions
+    // qmlRegisterSingletonInstance<CustomSoundsSettings>("example", 1, 0, "CustomSoundsSettings", this);
+
+    setButtons(Help);
     const QString xdgData = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
     const QString xdgSounds = xdgData + QStringLiteral("/sounds");
     const QDir soundsDir = xdgSounds;
@@ -32,6 +38,7 @@ CustomSoundsSettings::CustomSoundsSettings(QObject *parent, const KPluginMetaDat
 
 void CustomSoundsSettings::handleClick()
 {
+  qWarning() << "handleClick()";
 }
 
 QString CustomSoundsSettings::statusText() const

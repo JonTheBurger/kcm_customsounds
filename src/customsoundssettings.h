@@ -8,7 +8,7 @@ class CustomSoundsSettings : public KQuickConfigModule
 {
     Q_OBJECT
     Q_PROPERTY(QString statusText READ statusText NOTIFY statusTextChanged)
-    Q_PROPERTY(QStringListModel* themes READ themes NOTIFY themesChanged)
+    // Q_PROPERTY(QStringListModel* themes READ themes NOTIFY themesChanged)
 
 public:
     CustomSoundsSettings(QObject *parent, const KPluginMetaData &data);

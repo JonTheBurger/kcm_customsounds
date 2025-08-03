@@ -5,8 +5,10 @@ import org.kde.kcmutils as KCMUtils
 import org.kde.kirigami 2.4 as Kirigami
 import org.kde.plasma.components 3.0 as PlasmaComponents
 
+// import example 1.0
+
 KCMUtils.SimpleKCM {
-  id: kcm
+  // id: kcm
 
   property alias selectedId: copyStrategy.checkedButton
 
@@ -61,10 +63,7 @@ KCMUtils.SimpleKCM {
       PlasmaComponents.ToolButton {
         icon.name: "document-save"
         text: i18n("Save")
-        onClicked: {
-          console.log("Save")
-          kcm.handleClick()
-        }
+        onClicked: kcm.handleClick
       }
 
       PlasmaComponents.ToolButton {
@@ -72,17 +71,11 @@ KCMUtils.SimpleKCM {
         text: i18n("Delete")
         onClicked: {
           console.log("Delete")
-          kcm.handleClick()
+          kcm.handleClick
         }
       }
 
     }
-
-
-      ListView {
-          model: kcm.themes
-          delegate: Text { text: model.display }
-      }
 
     Kirigami.Separator {
       Layout.fillWidth: true
