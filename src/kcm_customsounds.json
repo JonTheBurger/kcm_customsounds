@@ -1,5 +1,6 @@
 {
     "KPlugin": {
+        "Id": "kcm_customsounds",
         "Description": "Custom System Sounds",
         "Description[x-test]": "xxCustom System Soundsxx",
         "FormFactors": [
@@ -10,7 +11,9 @@
         ],
         "Icon": "preferences-sound",
         "Name": "Custom System Sounds",
-        "Name[x-test]": "xxCustom System Soundsxx"
+        "Name[x-test]": "xxCustom System Soundsxx",
+        "ServiceTypes": [ "KCModule" ],
+        "X-KDE-PluginInfo-Name": "kcm_customsounds"
     },
     "X-KDE-Keywords": "Sound",
     "X-KDE-Keywords[x-test]": "xxSoundxx",

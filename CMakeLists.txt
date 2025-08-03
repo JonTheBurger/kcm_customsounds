@@ -7,6 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 project(kcm_customsounds)
 
+add_definitions(-DTRANSLATION_DOMAIN=\"${PROJECT_NAME}\")
+# ki18n_wrap_ui(kcm_customsounds)
+
 find_package(ECM ${KF6_MIN_VERSION} REQUIRED NO_MODULE)
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
