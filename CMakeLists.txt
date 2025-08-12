@@ -16,6 +16,7 @@ include(ECMQtDeclareLoggingCategory)
 include(KDEInstallDirs)
 include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
+include(KDEClangFormat)
 
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED
     Core
@@ -42,5 +43,15 @@ ecm_qt_declare_logging_category(${PROJECT_NAME}
     DESCRIPTION "kcm custom sounds"
     EXPORT CUSTOMSOUNDS
 )
+
+file(
+    GLOB_RECURSE kcm_customsounds_SRCS
+    LIST_DIRECTORIES false
+    CONFIGURE_DEPENDS
+    src/*.cpp
+    src/*.h
+)
+
+kde_clang_format(${kcm_customsounds_SRCS})
 
 add_subdirectory(src)

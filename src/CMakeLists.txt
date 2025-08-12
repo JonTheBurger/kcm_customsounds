@@ -18,11 +18,10 @@
 #     SETTINGS_CLASSES FontsSettings FontsAASettings
 # )
 
-set(kcm_customsounds_SRCS
+kcmutils_add_qml_kcm(${PROJECT_NAME}
     customsoundssettings.cpp
     customsoundssettings.h
 )
-kcmutils_add_qml_kcm(${PROJECT_NAME} ${kcm_customsounds_SRCS})
 target_sources(${PROJECT_NAME} PRIVATE ${kcm_customsounds_SRCS})
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt::Quick

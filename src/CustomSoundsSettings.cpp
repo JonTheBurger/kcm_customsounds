@@ -1,4 +1,4 @@
-#include "customsoundssettings.h"
+#include "CustomSoundsSettings.h"
 
 #include <KPluginFactory>
 #include <QDir>
@@ -7,7 +7,8 @@
 
 K_PLUGIN_CLASS_WITH_JSON(CustomSoundsSettings, "kcm_customsounds.json") // NOLINT
 
-namespace {
+namespace
+{
 auto getSoundsDir() -> QDir
 {
     const QString xdgData = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
@@ -32,6 +33,8 @@ CustomSoundsSettings::CustomSoundsSettings(QObject *parent, const KPluginMetaDat
     , m_statusText{QStringLiteral("TESTING")}
     , m_themes{getSoundThemes()}
     , m_themesModel{m_themes}
+    // , m_sounds{SystemSound::fromUserTheme()}
+    , m_soundsModel{}
 {
     setButtons(Help);
 }
@@ -51,4 +54,9 @@ auto CustomSoundsSettings::themes() -> QStringListModel *
     return &m_themesModel;
 }
 
-#include "customsoundssettings.moc"
+auto CustomSoundsSettings::sounds() -> SystemSoundModel *
+{
+    return &m_soundsModel;
+}
+
+#include "CustomSoundsSettings.moc"

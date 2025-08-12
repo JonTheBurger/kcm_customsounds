@@ -8,7 +8,6 @@ RowLayout {
   id: root
 
   property string text: ""
-  property string sound: ""
   property string file: ""
 
   MediaPlayer {
