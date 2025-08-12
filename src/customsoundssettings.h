@@ -1,21 +1,21 @@
 #pragma once
 
+#include <KQuickConfigModule>
 #include <QStringList>
 #include <QStringListModel>
-#include <KQuickConfigModule>
 
 class CustomSoundsSettings : public KQuickConfigModule
 {
     Q_OBJECT
     Q_PROPERTY(QString statusText READ statusText NOTIFY statusTextChanged)
-    // Q_PROPERTY(QStringListModel* themes READ themes NOTIFY themesChanged)
+    Q_PROPERTY(QStringListModel *themes READ themes NOTIFY themesChanged)
 
 public:
     CustomSoundsSettings(QObject *parent, const KPluginMetaData &data);
 
     Q_INVOKABLE void handleClick();
-    QString statusText() const;
-    QStringListModel* themes();
+    [[nodiscard]] auto statusText() const -> QString;
+    auto themes() -> QStringListModel *;
 
 Q_SIGNALS:
     void statusTextChanged();

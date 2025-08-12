@@ -29,6 +29,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     KF6::CoreAddons
     KF6::KCMUtils
     KF6::I18n
+    Qt6::Multimedia
 
     Qt6::Quick
     Qt6::DBus

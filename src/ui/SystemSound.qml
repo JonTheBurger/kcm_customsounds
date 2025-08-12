@@ -1,4 +1,6 @@
+import QtMultimedia 6.5
 import QtQuick 6.5
+import QtQuick.Dialogs 6.5
 import QtQuick.Layouts 6.5
 import org.kde.plasma.components 3.0 as PlasmaComponents
 
@@ -9,14 +11,32 @@ RowLayout {
   property string sound: ""
   property string file: ""
 
+  MediaPlayer {
+    id: audio
+    source: root.file
+    audioOutput: AudioOutput {}
+  }
+
   PlasmaComponents.ToolButton {
     icon.name: "media-playback-start"
+    onClicked: {
+      audio.source = "file://" + root.file
+      audio.play()
+    }
   }
 
   PlasmaComponents.ToolButton {
     icon.name: "edit"
     onClicked: {
-      console.log("Edit button clicked")
+      fileDialog.currentFolder = "file://" + root.file.substring(0, root.file.lastIndexOf("/"))
+      fileDialog.open()
+    }
+  }
+
+  FileDialog {
+    id: fileDialog
+    onAccepted: {
+      root.file = this.selectedFile.toString().substring("file://".length)
     }
   }
 
@@ -26,15 +46,19 @@ RowLayout {
   }
 
   PlasmaComponents.TextField {
+    id: textField
     text: root.file
     Layout.fillWidth: true
     onTextChanged: {
-      // root.text = text
+      root.file = this.text
     }
   }
 
   PlasmaComponents.ToolButton {
     icon.name: "reload"
+    onClicked: {
+      root.file = ""
+    }
   }
 
 }

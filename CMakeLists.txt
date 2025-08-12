@@ -18,10 +18,11 @@ include(KDECompilerSettings NO_POLICY_SCOPE)
 include(KDECMakeSettings)
 
 find_package(Qt6 ${QT_MIN_VERSION} CONFIG REQUIRED
-  Core
-  Quick
-  Gui
-  Qml
+    Core
+    Quick
+    Gui
+    Multimedia
+    Qml
 )
 
 find_package(KF6 ${KF6_MIN_VERSION} REQUIRED COMPONENTS

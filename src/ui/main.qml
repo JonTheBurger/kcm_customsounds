@@ -5,11 +5,7 @@ import org.kde.kcmutils as KCMUtils
 import org.kde.kirigami 2.4 as Kirigami
 import org.kde.plasma.components 3.0 as PlasmaComponents
 
-// import example 1.0
-
 KCMUtils.SimpleKCM {
-  // id: kcm
-
   property alias selectedId: copyStrategy.checkedButton
 
   ButtonGroup {
@@ -38,12 +34,11 @@ KCMUtils.SimpleKCM {
 
       PlasmaComponents.ComboBox {
         id: themeName
-        // editable: true
+        editable: true
         Layout.fillWidth: true
-        // validator: RegularExpressionValidator{ regularExpression: /[^/]+/ }
+        validator: RegularExpressionValidator{ regularExpression: /[^/]+/ }
         model: kcm.themes
-        // model: ["A", "B", "C"]
-        // textRole: "display"
+        textRole: "display"
         onEditTextChanged: {
           console.log("Theme Name changed to: " + themeName.editText)
           kcm.handleClick()
@@ -71,7 +66,7 @@ KCMUtils.SimpleKCM {
         text: i18n("Delete")
         onClicked: {
           console.log("Delete")
-          kcm.handleClick
+          kcm.handleClick()
         }
       }
 
@@ -80,6 +75,16 @@ KCMUtils.SimpleKCM {
     Kirigami.Separator {
       Layout.fillWidth: true
     }
+
+    // TODO:
+    // Kirigami.FormLayout and FormData.label
+    // https://api.kde.org/frameworks/kcmutils/html/classSimpleKCM.html
+
+    // TODO:
+    // Repeater {
+    //     model: kcm.sounds
+    //     delegate: Text { text: modelData.text }
+    // }
 
     SystemSound {
       text: i18n("Alarm Clock Elapsed")

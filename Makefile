@@ -1,5 +1,5 @@
 export QML_DISABLE_DISK_CACHE=1
-export QT_LOGGING_RULES="kcm.customsounds.debug=true"
+export QT_LOGGING_RULES=kcm.customsounds.debug=true
 
 clean:
 	rm -rf build
