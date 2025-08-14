@@ -31,7 +31,7 @@ public:
      * If a theme exists but does not contain a particular sound, that sound
      * will be returned with an empty file().
      */
-    static auto fromTheme(QStringView theme) -> std::vector<std::unique_ptr<SystemSound>>;
+    static auto fromTheme(const QString& theme) -> std::vector<std::unique_ptr<SystemSound>>;
 
     /// text Display name of the sound, translatable.
     [[nodiscard]] auto text() const -> QString;
@@ -52,3 +52,5 @@ private:
     QString m_hint;
     QString m_file;
 };
+
+auto operator<<(QDebug dbg, const SystemSound &self) -> QDebug;

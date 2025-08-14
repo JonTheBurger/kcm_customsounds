@@ -1,64 +1,64 @@
 #include "SystemSound.h"
 
-#include <filesystem>
-#include <utility>
-
 #include <QStandardPaths>
 #include <QtLogging>
 
-namespace fs = std::filesystem;
-
 namespace
 {
-constexpr struct {
-    QStringView name;
-    QStringView hint;
+auto operator/(const QDir &dir, const QString &subdir) -> QDir
+{
+    return QDir(dir.filePath(subdir));
+}
+
+// TODO: tr()
+const struct {
+    QString name;
+    QString hint;
 } SYSTEM_SOUNDS[] = {
-    // TODO: tr()
-    {.name = u"Alarm Clock Elapsed", .hint = u"alarm-clock-elapsed"},
-    {.name = u"Audio Volume Change", .hint = u"audio-volume-change"},
-    {.name = u"Battery Caution", .hint = u"battery-caution"},
-    {.name = u"Battery Full", .hint = u"battery-full"},
-    {.name = u"Battery Low", .hint = u"battery-low"},
-    {.name = u"Bell Window System", .hint = u"bell-window-system"},
-    {.name = u"Bell", .hint = u"bell"},
-    {.name = u"Button Pressed Modifier", .hint = u"button-pressed-modifier"},
-    {.name = u"Button Pressed", .hint = u"button-pressed"},
-    {.name = u"Complete Media Burn", .hint = u"complete-media-burn"},
-    {.name = u"Complete Media Error", .hint = u"complete-media-error"},
-    {.name = u"Completion Fail", .hint = u"completion-fail"},
-    {.name = u"Completion Partial", .hint = u"completion-partial"},
-    {.name = u"Completion Rotation", .hint = u"completion-rotation"},
-    {.name = u"Completion Success", .hint = u"completion-success"},
-    {.name = u"Desktop Login", .hint = u"desktop-login"},
-    {.name = u"Desktop Logout", .hint = u"desktop-logout"},
-    {.name = u"Device Added", .hint = u"device-added"},
-    {.name = u"Device Removed", .hint = u"device-removed"},
-    {.name = u"Dialog Error Critical", .hint = u"dialog-error-critical"},
-    {.name = u"Dialog Error Serious", .hint = u"dialog-error-serious"},
-    {.name = u"Dialog Error", .hint = u"dialog-error"},
-    {.name = u"Dialog Information", .hint = u"dialog-information"},
-    {.name = u"Dialog Question", .hint = u"dialog-question"},
-    {.name = u"Dialog Warning Auth", .hint = u"dialog-warning-auth"},
-    {.name = u"Dialog Warning", .hint = u"dialog-warning"},
-    {.name = u"Game Over Loser", .hint = u"game-over-loser"},
-    {.name = u"Game Over Winner", .hint = u"game-over-winner"},
-    {.name = u"Media Insert Request", .hint = u"media-insert-request"},
-    {.name = u"Message Attention", .hint = u"message-attention"},
-    {.name = u"Message Contact In", .hint = u"message-contact-in"},
-    {.name = u"Message Contact Out", .hint = u"message-contact-out"},
-    {.name = u"Message Highlight", .hint = u"message-highlight"},
-    {.name = u"Message New Instant", .hint = u"message-new-instant"},
-    {.name = u"Message Sent Instant", .hint = u"message-sent-instant"},
-    {.name = u"Outcome Failure", .hint = u"outcome-failure"},
-    {.name = u"Outcome Success", .hint = u"outcome-success"},
-    {.name = u"Phone Incoming Call", .hint = u"phone-incoming-call"},
-    {.name = u"Power Plug", .hint = u"power-plug"},
-    {.name = u"Power Unplug", .hint = u"power-unplug"},
-    {.name = u"Service Login", .hint = u"service-login"},
-    {.name = u"Service Logout", .hint = u"service-logout"},
-    {.name = u"Theme Demo", .hint = u"theme-demo"},
-    {.name = u"Trash Empty", .hint = u"trash-empty"},
+    {.name = QStringLiteral("Alarm Clock Elapsed"), .hint = QStringLiteral("alarm-clock-elapsed")},
+    {.name = QStringLiteral("Audio Volume Change"), .hint = QStringLiteral("audio-volume-change")},
+    {.name = QStringLiteral("Battery Caution"), .hint = QStringLiteral("battery-caution")},
+    {.name = QStringLiteral("Battery Full"), .hint = QStringLiteral("battery-full")},
+    {.name = QStringLiteral("Battery Low"), .hint = QStringLiteral("battery-low")},
+    {.name = QStringLiteral("Bell Window System"), .hint = QStringLiteral("bell-window-system")},
+    {.name = QStringLiteral("Bell"), .hint = QStringLiteral("bell")},
+    {.name = QStringLiteral("Button Pressed Modifier"), .hint = QStringLiteral("button-pressed-modifier")},
+    {.name = QStringLiteral("Button Pressed"), .hint = QStringLiteral("button-pressed")},
+    {.name = QStringLiteral("Complete Media Burn"), .hint = QStringLiteral("complete-media-burn")},
+    {.name = QStringLiteral("Complete Media Error"), .hint = QStringLiteral("complete-media-error")},
+    {.name = QStringLiteral("Completion Fail"), .hint = QStringLiteral("completion-fail")},
+    {.name = QStringLiteral("Completion Partial"), .hint = QStringLiteral("completion-partial")},
+    {.name = QStringLiteral("Completion Rotation"), .hint = QStringLiteral("completion-rotation")},
+    {.name = QStringLiteral("Completion Success"), .hint = QStringLiteral("completion-success")},
+    {.name = QStringLiteral("Desktop Login"), .hint = QStringLiteral("desktop-login")},
+    {.name = QStringLiteral("Desktop Logout"), .hint = QStringLiteral("desktop-logout")},
+    {.name = QStringLiteral("Device Added"), .hint = QStringLiteral("device-added")},
+    {.name = QStringLiteral("Device Removed"), .hint = QStringLiteral("device-removed")},
+    {.name = QStringLiteral("Dialog Error Critical"), .hint = QStringLiteral("dialog-error-critical")},
+    {.name = QStringLiteral("Dialog Error Serious"), .hint = QStringLiteral("dialog-error-serious")},
+    {.name = QStringLiteral("Dialog Error"), .hint = QStringLiteral("dialog-error")},
+    {.name = QStringLiteral("Dialog Information"), .hint = QStringLiteral("dialog-information")},
+    {.name = QStringLiteral("Dialog Question"), .hint = QStringLiteral("dialog-question")},
+    {.name = QStringLiteral("Dialog Warning Auth"), .hint = QStringLiteral("dialog-warning-auth")},
+    {.name = QStringLiteral("Dialog Warning"), .hint = QStringLiteral("dialog-warning")},
+    {.name = QStringLiteral("Game Over Loser"), .hint = QStringLiteral("game-over-loser")},
+    {.name = QStringLiteral("Game Over Winner"), .hint = QStringLiteral("game-over-winner")},
+    {.name = QStringLiteral("Media Insert Request"), .hint = QStringLiteral("media-insert-request")},
+    {.name = QStringLiteral("Message Attention"), .hint = QStringLiteral("message-attention")},
+    {.name = QStringLiteral("Message Contact In"), .hint = QStringLiteral("message-contact-in")},
+    {.name = QStringLiteral("Message Contact Out"), .hint = QStringLiteral("message-contact-out")},
+    {.name = QStringLiteral("Message Highlight"), .hint = QStringLiteral("message-highlight")},
+    {.name = QStringLiteral("Message New Instant"), .hint = QStringLiteral("message-new-instant")},
+    {.name = QStringLiteral("Message Sent Instant"), .hint = QStringLiteral("message-sent-instant")},
+    {.name = QStringLiteral("Outcome Failure"), .hint = QStringLiteral("outcome-failure")},
+    {.name = QStringLiteral("Outcome Success"), .hint = QStringLiteral("outcome-success")},
+    {.name = QStringLiteral("Phone Incoming Call"), .hint = QStringLiteral("phone-incoming-call")},
+    {.name = QStringLiteral("Power Plug"), .hint = QStringLiteral("power-plug")},
+    {.name = QStringLiteral("Power Unplug"), .hint = QStringLiteral("power-unplug")},
+    {.name = QStringLiteral("Service Login"), .hint = QStringLiteral("service-login")},
+    {.name = QStringLiteral("Service Logout"), .hint = QStringLiteral("service-logout")},
+    {.name = QStringLiteral("Theme Demo"), .hint = QStringLiteral("theme-demo")},
+    {.name = QStringLiteral("Trash Empty"), .hint = QStringLiteral("trash-empty")},
 };
 
 auto getSoundThemes(const QDir &soundsDir) -> QStringList
@@ -83,29 +83,40 @@ auto SystemSound::userThemes() -> QStringList
     return getSoundThemes(userDirectory());
 }
 
-// auto SystemSound::fromUserTheme() -> QList<SystemSound>
-// {
-//     QList<SystemSound> sounds;
-//     sounds.emplace_back(QStringLiteral("Alarm Clock"), QStringLiteral("/home/jon/.local/share/sounds/jon/stereo/alarm-clock.oga"));
-//     return sounds;
-// }
-
-auto SystemSound::fromTheme(QStringView theme) -> std::vector<std::unique_ptr<SystemSound>>
+auto SystemSound::fromTheme(const QString &theme) -> std::vector<std::unique_ptr<SystemSound>>
 {
     auto sounds = std::vector<std::unique_ptr<SystemSound>>{};
 
-    QDir userDir = userDirectory();
-    auto userPath = userDir.filesystemAbsolutePath();
+    QDir themeDir = userDirectory() / theme / QStringLiteral("stereo");
+
     for (const auto &sound : SYSTEM_SOUNDS) {
-        // TODO: Find sound
-        sounds.push_back(std::make_unique<SystemSound>(sound.name.toString(), sound.hint.toString(), QString()));
+        sounds.push_back(std::make_unique<SystemSound>(sound.name, sound.hint, QString()));
     }
 
+    if (themeDir.exists()) {
+        themeDir.setFilter(QDir::Files | QDir::Readable);
+        qInfo() << "Searching for sounds in " << themeDir;
+
+        for (const auto &sound : sounds) {
+            auto files = themeDir.entryList({sound->hint() + QStringLiteral(".*")});
+            if (!files.empty()) {
+                qInfo() << "Found sounds: " << files << " for " << sound->hint();
+                sound->setFile(themeDir.filePath(files[0]));
+            } else {
+                qInfo() << "No sounds for " << sound->hint() << " in " << themeDir;
+            }
+        }
+    } else {
+        qInfo() << "Theme " << themeDir << " does not exist";
+    }
+
+    themeDir.mkpath(themeDir.absolutePath());
     return sounds;
 }
 
 SystemSound::SystemSound(const QString &text, const QString &hint, const QString &file)
     : m_text{text}
+    , m_hint{hint}
     , m_file{file}
 {
 }
@@ -136,4 +147,10 @@ void SystemSound::setFile(const QString &file)
 void SystemSound::resetFile()
 {
     setFile({});
+}
+
+auto operator<<(QDebug dbg, const SystemSound &self) -> QDebug
+{
+    dbg.nospace() << "SystemSound(" << self.text() << ", " << self.hint() << ", " << self.file() << ")";
+    return dbg.space();
 }
