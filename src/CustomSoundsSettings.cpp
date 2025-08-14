@@ -33,8 +33,7 @@ CustomSoundsSettings::CustomSoundsSettings(QObject *parent, const KPluginMetaDat
     , m_statusText{QStringLiteral("TESTING")}
     , m_themes{getSoundThemes()}
     , m_themesModel{m_themes}
-    // , m_sounds{SystemSound::fromUserTheme()}
-    , m_soundsModel{}
+    , m_soundsModel{SystemSound::fromTheme(u"")}
 {
     setButtons(Help);
 }

@@ -2,13 +2,10 @@
 
 #include <QtLogging>
 
-// SystemSoundModel::SystemSoundModel(const QList<SystemSound> &sounds, QObject *parent)
-SystemSoundModel::SystemSoundModel(QObject *parent)
+SystemSoundModel::SystemSoundModel(std::vector<std::unique_ptr<SystemSound>> sounds, QObject *parent)
     : QAbstractListModel(parent)
-    , m_sounds{}
+    , m_sounds{std::move(sounds)}
 {
-    m_sounds.push_back(
-        std::make_unique<SystemSound>(QStringLiteral("Alarm Clock"), QStringLiteral("/home/jon/.local/share/sounds/jon/stereo/alarm-clock.oga")));
 }
 
 auto SystemSoundModel::rowCount(const QModelIndex &parent) const -> int
@@ -40,9 +37,6 @@ auto SystemSoundModel::setData(const QModelIndex &index, const QVariant &value, 
 
     if (data(index, role) != value) {
         switch (role) {
-        case SystemSoundModel::Role::TextRole:
-            m_sounds[index.row()]->setText(value.toString());
-            break;
         case SystemSoundModel::Role::FileRole:
             m_sounds[index.row()]->setFile(value.toString());
             break;

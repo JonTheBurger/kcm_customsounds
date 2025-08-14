@@ -30,6 +30,5 @@ private:
     QString m_statusText;
     QStringList m_themes;
     QStringListModel m_themesModel;
-    QVector<SystemSound> m_sounds;
     SystemSoundModel m_soundsModel;
 };

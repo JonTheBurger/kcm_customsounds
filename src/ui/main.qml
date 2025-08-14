@@ -16,7 +16,6 @@ KCMUtils.SimpleKCM {
   }
 
   ColumnLayout {
-
     RowLayout {
       id: header
 
@@ -78,259 +77,24 @@ KCMUtils.SimpleKCM {
       Layout.fillWidth: true
     }
 
+    ListView {
+      model: kcm.sounds
+      Layout.fillWidth: true
+      Layout.fillHeight: true
+      Layout.preferredHeight: contentHeight
+      spacing: 4
+
+      delegate: SystemSound {
+        text: model.text
+        file: model.file
+        width: ListView.view.width
+        // anchors.margins: 4
+      }
+    }
+
     // TODO:
     // Kirigami.FormLayout and FormData.label
     // https://api.kde.org/frameworks/kcmutils/html/classSimpleKCM.html
-
-    // TODO:
-    // Repeater {
-    //     model: kcm.sounds
-    //     delegate: Text { text: modelData.text }
-    // }
-
-    component SoundDelegate : RowLayout {
-      id: soundDelegate
-
-      property string text: ""
-      property string file: ""
-
-      MediaPlayer {
-        id: audio
-        source: soundDelegate.file
-        audioOutput: AudioOutput {}
-      }
-
-      PlasmaComponents.ToolButton {
-        icon.name: "media-playback-start"
-        onClicked: {
-          audio.source = "file://" + soundDelegate.file
-          audio.play()
-        }
-      }
-
-      PlasmaComponents.ToolButton {
-        icon.name: "edit"
-        onClicked: {
-          fileDialog.currentFolder = "file://" + soundDelegate.file.substring(0, soundDelegate.file.lastIndexOf("/"))
-          fileDialog.open()
-        }
-      }
-
-      FileDialog {
-        id: fileDialog
-        onAccepted: {
-          soundDelegate.file = this.selectedFile.toString().substring("file://".length)
-        }
-      }
-
-      PlasmaComponents.Label {
-        text: soundDelegate.text
-        Layout.preferredWidth: 200
-      }
-
-      PlasmaComponents.TextField {
-        id: textField
-        text: soundDelegate.file
-        Layout.fillWidth: true
-        onTextChanged: {
-          soundDelegate.file = this.text
-        }
-      }
-
-      PlasmaComponents.ToolButton {
-        icon.name: "reload"
-        onClicked: {
-          soundDelegate.file = ""
-        }
-      }
-
-    }
-
-    ListView {
-      Layout.fillWidth: true
-      model: kcm.sounds
-      delegate: SoundDelegate {
-        text: model.text
-        file: model.file
-      }
-    }
-
-    // SystemSound {
-    //   text: i18n("Alarm Clock Elapsed")
-    //   sound: "alarm-clock-elapsed"
-    // }
-    // SystemSound {
-    //   text: i18n("Audio Volume Change")
-    //   sound: "audio-volume-change"
-    // }
-    // SystemSound {
-    //   text: i18n("Battery Caution")
-    //   sound: "battery-caution"
-    // }
-    // SystemSound {
-    //   text: i18n("Battery Full")
-    //   sound: "battery-full"
-    // }
-    // SystemSound {
-    //   text: i18n("Battery Low")
-    //   sound: "battery-low"
-    // }
-    // SystemSound {
-    //   text: i18n("Bell Window System")
-    //   sound: "bell-window-system"
-    // }
-    // SystemSound {
-    //   text: i18n("Bell")
-    //   sound: "bell"
-    // }
-    // SystemSound {
-    //   text: i18n("Button Pressed Modifier")
-    //   sound: "button-pressed-modifier"
-    // }
-    // SystemSound {
-    //   text: i18n("Button Pressed")
-    //   sound: "button-pressed"
-    // }
-    // SystemSound {
-    //   text: i18n("Complete Media Burn")
-    //   sound: "complete-media-burn"
-    // }
-    // SystemSound {
-    //   text: i18n("Complete Media Error")
-    //   sound: "complete-media-error"
-    // }
-    // SystemSound {
-    //   text: i18n("Completion Fail")
-    //   sound: "completion-fail"
-    // }
-    // SystemSound {
-    //   text: i18n("Completion Partial")
-    //   sound: "completion-partial"
-    // }
-    // SystemSound {
-    //   text: i18n("Completion Rotation")
-    //   sound: "completion-rotation"
-    // }
-    // SystemSound {
-    //   text: i18n("Completion Success")
-    //   sound: "completion-success"
-    // }
-    // SystemSound {
-    //   text: i18n("Desktop Login")
-    //   sound: "desktop-login"
-    // }
-    // SystemSound {
-    //   text: i18n("Desktop Logout")
-    //   sound: "desktop-logout"
-    // }
-    // SystemSound {
-    //   text: i18n("Device Added")
-    //   sound: "device-added"
-    // }
-    // SystemSound {
-    //   text: i18n("Device Removed")
-    //   sound: "device-removed"
-    // }
-    // SystemSound {
-    //   text: i18n("Dialog Error Critical")
-    //   sound: "dialog-error-critical"
-    // }
-    // SystemSound {
-    //   text: i18n("Dialog Error Serious")
-    //   sound: "dialog-error-serious"
-    // }
-    // SystemSound {
-    //   text: i18n("Dialog Error")
-    //   sound: "dialog-error"
-    // }
-    // SystemSound {
-    //   text: i18n("Dialog Information")
-    //   sound: "dialog-information"
-    // }
-    // SystemSound {
-    //   text: i18n("Dialog Question")
-    //   sound: "dialog-question"
-    // }
-    // SystemSound {
-    //   text: i18n("Dialog Warning Auth")
-    //   sound: "dialog-warning-auth"
-    // }
-    // SystemSound {
-    //   text: i18n("Dialog Warning")
-    //   sound: "dialog-warning"
-    // }
-    // SystemSound {
-    //   text: i18n("Game Over Loser")
-    //   sound: "game-over-loser"
-    // }
-    // SystemSound {
-    //   text: i18n("Game Over Winner")
-    //   sound: "game-over-winner"
-    // }
-    // SystemSound {
-    //   text: i18n("Media Insert Request")
-    //   sound: "media-insert-request"
-    // }
-    // SystemSound {
-    //   text: i18n("Message Attention")
-    //   sound: "message-attention"
-    // }
-    // SystemSound {
-    //   text: i18n("Message Contact In")
-    //   sound: "message-contact-in"
-    // }
-    // SystemSound {
-    //   text: i18n("Message Contact Out")
-    //   sound: "message-contact-out"
-    // }
-    // SystemSound {
-    //   text: i18n("Message Highlight")
-    //   sound: "message-highlight"
-    // }
-    // SystemSound {
-    //   text: i18n("Message New Instant")
-    //   sound: "message-new-instant"
-    // }
-    // SystemSound {
-    //   text: i18n("Message Sent Instant")
-    //   sound: "message-sent-instant"
-    // }
-    // SystemSound {
-    //   text: i18n("Outcome Failure")
-    //   sound: "outcome-failure"
-    // }
-    // SystemSound {
-    //   text: i18n("Outcome Success")
-    //   sound: "outcome-success"
-    // }
-    // SystemSound {
-    //   text: i18n("Phone Incoming Call")
-    //   sound: "phone-incoming-call"
-    // }
-    // SystemSound {
-    //   text: i18n("Power Plug")
-    //   sound: "power-plug"
-    // }
-    // SystemSound {
-    //   text: i18n("Power Unplug")
-    //   sound: "power-unplug"
-    // }
-    // SystemSound {
-    //   text: i18n("Service Login")
-    //   sound: "service-login"
-    // }
-    // SystemSound {
-    //   text: i18n("Service Logout")
-    //   sound: "service-logout"
-    // }
-    // SystemSound {
-    //   text: i18n("Theme Demo")
-    //   sound: "theme-demo"
-    // }
-    // SystemSound {
-    //   text: i18n("Trash Empty")
-    //   sound: "trash-empty"
-    // }
 
   }
 }
