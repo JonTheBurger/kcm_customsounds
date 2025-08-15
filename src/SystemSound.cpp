@@ -6,14 +6,9 @@
 
 namespace
 {
-auto operator/(const QDir &dir, const QString &subdir) -> QDir
+auto tr(const char *str)
 {
-    return dir.filePath(subdir);
-}
-
-auto tr(const char* str)
-{
-  return QCoreApplication::translate("SystemSound", str);
+    return QCoreApplication::translate("SystemSound", str);
 }
 
 // TODO: https://techbase.kde.org/Development/Tutorials/Localization/i18n
@@ -101,22 +96,24 @@ auto SystemSound::fromTheme(const QString &theme) -> std::vector<std::unique_ptr
 
     if (themeDir.exists()) {
         themeDir.setFilter(QDir::Files | QDir::Readable);
-        qInfo() << "Searching for sounds in " << themeDir;
+        qInfo() << "Searching for sounds in " << themeDir.path();
 
         for (const auto &sound : sounds) {
             auto files = themeDir.entryList({sound->hint() + QStringLiteral(".*")});
             if (!files.empty()) {
-                qInfo() << "Found sounds: " << files << " for " << sound->hint();
+                qDebug() << "Found sounds: " << files << " for " << sound->hint();
                 sound->setFile(themeDir.filePath(files[0]));
             } else {
-                qInfo() << "No sounds for " << sound->hint() << " in " << themeDir;
+                qInfo() << "No sounds for " << sound->hint() << " in " << themeDir.path();
             }
         }
     } else {
-        qInfo() << "Theme " << themeDir << " does not exist";
+        qInfo() << "Theme " << themeDir.path() << " does not exist";
     }
 
-    themeDir.mkpath(themeDir.absolutePath());
+    if (!theme.isEmpty()) {
+        themeDir.mkpath(themeDir.absolutePath());
+    }
     return sounds;
 }
 
@@ -150,13 +147,13 @@ void SystemSound::setFile(const QString &file)
     }
 }
 
-void SystemSound::resetFile()
-{
-    setFile({});
-}
-
 auto operator<<(QDebug dbg, const SystemSound &self) -> QDebug
 {
     dbg.nospace() << "SystemSound(" << self.text() << ", " << self.hint() << ", " << self.file() << ")";
     return dbg.space();
+}
+
+auto operator/(const QDir &dir, const QString &subdir) -> QDir
+{
+    return dir.filePath(subdir);
 }

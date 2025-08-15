@@ -14,14 +14,21 @@ class SystemSound final : public QObject
     Q_OBJECT
     Q_PROPERTY(QString text READ text CONSTANT)
     Q_PROPERTY(QString hint READ hint CONSTANT)
-    Q_PROPERTY(QString file READ file WRITE setFile NOTIFY fileChanged RESET resetFile)
+    Q_PROPERTY(QString file READ file WRITE setFile NOTIFY fileChanged)
 
 public:
     SystemSound() = default;
     SystemSound(const QString &text, const QString &hint, const QString &file);
 
+    /** @returns The directory containing user sound themes (usually `~/.local/share/sounds`).
+     * It will be created if it does not exist.
+     */
     static auto userDirectory() -> QDir;
+
+    /** @returns A list of all existing user sound themes.
+     */
     static auto userThemes() -> QStringList;
+
     // static auto fromUserTheme() -> QList<SystemSound>;
 
     /** Look up a user theme by name and return a list of sounds.
@@ -31,18 +38,18 @@ public:
      * If a theme exists but does not contain a particular sound, that sound
      * will be returned with an empty file().
      */
-    static auto fromTheme(const QString& theme) -> std::vector<std::unique_ptr<SystemSound>>;
+    static auto fromTheme(const QString &theme) -> std::vector<std::unique_ptr<SystemSound>>;
 
     /// text Display name of the sound, translatable.
     [[nodiscard]] auto text() const -> QString;
+
     /// hint Name of the sound file, without any extensions. Used to lookup the file.
     [[nodiscard]] auto hint() const -> QString;
+
     /// text Path containing system sound.
     [[nodiscard]] auto file() const -> QString;
 
     void setFile(const QString &file);
-
-    void resetFile();
 
 Q_SIGNALS:
     void fileChanged();
@@ -54,3 +61,4 @@ private:
 };
 
 auto operator<<(QDebug dbg, const SystemSound &self) -> QDebug;
+auto operator/(const QDir &dir, const QString &subdir) -> QDir;

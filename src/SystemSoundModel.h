@@ -19,6 +19,8 @@ public:
 
     explicit SystemSoundModel(std::vector<std::unique_ptr<SystemSound>> sounds, QObject *parent = nullptr);
     auto reset(std::vector<std::unique_ptr<SystemSound>> sounds) -> void;
+    [[nodiscard]] auto raw() const noexcept -> const std::vector<std::unique_ptr<SystemSound>> &;
+
     [[nodiscard]] auto rowCount(const QModelIndex &parent = QModelIndex()) const -> int override;
     [[nodiscard]] auto data(const QModelIndex &index, int role = Qt::DisplayRole) const -> QVariant override;
     auto setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) -> bool override;

@@ -26,7 +26,7 @@ KCMUtils.SimpleKCM {
         editable: true
         validator: RegularExpressionValidator{ regularExpression: /[^/]+/ }
         onEditTextChanged: {
-          kcm.theme = this.currentText
+          kcm.theme = this.editText
         }
       }
 

@@ -9,14 +9,14 @@
 class CustomSoundsSettings : public KQuickConfigModule
 {
     Q_OBJECT
-    Q_PROPERTY(QString theme READ theme WRITE setTheme)
+    Q_PROPERTY(QString theme READ theme WRITE setTheme NOTIFY themeChanged)
     Q_PROPERTY(QStringListModel *themes READ themes NOTIFY themesChanged)
     Q_PROPERTY(SystemSoundModel *sounds READ sounds NOTIFY soundsChanged)
 
 public:
     CustomSoundsSettings(QObject *parent, const KPluginMetaData &data);
 
-    auto setTheme(const QString& theme) -> void;
+    auto setTheme(const QString &theme) -> void;
     [[nodiscard]] auto theme() const -> QString;
     [[nodiscard]] auto themes() -> QStringListModel *;
     [[nodiscard]] auto sounds() -> SystemSoundModel *;
@@ -26,6 +26,7 @@ public:
     Q_INVOKABLE void onDeleteClicked();
 
 Q_SIGNALS:
+    void themeChanged();
     void themesChanged();
     void soundsChanged();
 
