@@ -12,8 +12,8 @@
 class SystemSound final : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString text READ text)
-    Q_PROPERTY(QString hint READ hint)
+    Q_PROPERTY(QString text READ text CONSTANT)
+    Q_PROPERTY(QString hint READ hint CONSTANT)
     Q_PROPERTY(QString file READ file WRITE setFile NOTIFY fileChanged RESET resetFile)
 
 public:

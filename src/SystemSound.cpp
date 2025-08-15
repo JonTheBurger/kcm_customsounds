@@ -16,7 +16,7 @@ auto tr(const char* str)
   return QCoreApplication::translate("SystemSound", str);
 }
 
-// TODO: https://doc.qt.io/archives/qt-5.15/i18n-source-translation.html#using-qt-tr-noop-and-qt-translate-noop-in-c
+// TODO: https://techbase.kde.org/Development/Tutorials/Localization/i18n
 const struct {
     QString name;
     QString hint;

@@ -1,20 +1,25 @@
-import QtQuick 6.5
-import QtQuick.Layouts 6.5
-import org.kde.kcmutils as KCMUtils
-import org.kde.kirigami 2.4 as Kirigami
-import org.kde.plasma.components 3.0 as PlasmaComponents
+import QtQuick 2.15
+import QtQuick.Controls 2.15 as Controls
+import QtQuick.Layouts 1.15
+
+import org.kde.kcmutils 1.0 as KCMUtils
+import org.kde.kirigami 2.7 as Kirigami
 
 KCMUtils.SimpleKCM {
+  Layout.fillWidth: true
 
   ColumnLayout {
 
     RowLayout {
 
-      PlasmaComponents.Label {
+      Kirigami.Heading {
         text: i18n("Theme:")
+        level: 2
       }
 
-      PlasmaComponents.ComboBox {
+      Kirigami.Separator {}
+
+      Controls.ComboBox {
         Layout.fillWidth: true
         model: kcm.themes
         textRole: "display"
@@ -25,22 +30,31 @@ KCMUtils.SimpleKCM {
         }
       }
 
-      PlasmaComponents.ToolButton {
-        text: i18n("Load")
-        icon.name: "document-open"
-        onClicked: kcm.onLoadClicked()
-      }
+      Kirigami.ActionToolBar {
+        // display: Controls.Button.IconOnly
+        Layout.maximumWidth: this.visibleWidth
+        Layout.preferredWidth: Layout.maximumWidth
+        actions: [
 
-      PlasmaComponents.ToolButton {
-        text: i18n("Save")
-        icon.name: "document-save"
-        onClicked: kcm.onSaveClicked()
-      }
+          Kirigami.Action {
+            text: i18n("Load")
+            icon.name: "document-open"
+            onTriggered: kcm.onLoadClicked()
+          },
 
-      PlasmaComponents.ToolButton {
-        text: i18n("Delete")
-        icon.name: "delete"
-        onClicked: kcm.onDeleteClicked()
+          Kirigami.Action {
+            text: i18n("Save")
+            icon.name: "document-save"
+            onTriggered: kcm.onSaveClicked()
+          },
+
+          Kirigami.Action {
+            text: i18n("Delete")
+            icon.name: "delete"
+            onTriggered: kcm.onDeleteClicked()
+          }
+
+        ]
       }
 
     }
@@ -62,10 +76,6 @@ KCMUtils.SimpleKCM {
         width: ListView.view.width
       }
     }
-
-    // TODO:
-    // Kirigami.FormLayout and FormData.label
-    // https://api.kde.org/frameworks/kcmutils/html/classSimpleKCM.html
 
   }
 }

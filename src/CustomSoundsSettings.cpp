@@ -10,7 +10,7 @@ K_PLUGIN_CLASS_WITH_JSON(CustomSoundsSettings, "kcm_customsounds.json") // NOLIN
 CustomSoundsSettings::CustomSoundsSettings(QObject *parent, const KPluginMetaData &data)
     : KQuickConfigModule(parent, data)
     , m_themesModel{SystemSound::userThemes()} // TODO: Get current theme
-    , m_soundsModel{SystemSound::fromTheme(QStringLiteral(""))}
+    , m_soundsModel{SystemSound::fromTheme(QString())}
 {
     setButtons(Help);
 }

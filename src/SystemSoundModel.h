@@ -17,7 +17,7 @@ public:
         FileRole,
     };
 
-    SystemSoundModel(std::vector<std::unique_ptr<SystemSound>> sounds, QObject *parent = nullptr);
+    explicit SystemSoundModel(std::vector<std::unique_ptr<SystemSound>> sounds, QObject *parent = nullptr);
     auto reset(std::vector<std::unique_ptr<SystemSound>> sounds) -> void;
     [[nodiscard]] auto rowCount(const QModelIndex &parent = QModelIndex()) const -> int override;
     [[nodiscard]] auto data(const QModelIndex &index, int role = Qt::DisplayRole) const -> QVariant override;
