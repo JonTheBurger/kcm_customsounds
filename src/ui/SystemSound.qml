@@ -52,7 +52,6 @@ Item {
     }
 
     PlasmaComponents.TextField {
-      id: textField
       text: root.file
       Layout.fillWidth: true
       onTextChanged: {

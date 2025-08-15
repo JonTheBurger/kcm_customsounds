@@ -1,5 +1,6 @@
 #include "SystemSound.h"
 
+#include <QCoreApplication>
 #include <QStandardPaths>
 #include <QtLogging>
 
@@ -7,58 +8,63 @@ namespace
 {
 auto operator/(const QDir &dir, const QString &subdir) -> QDir
 {
-    return QDir(dir.filePath(subdir));
+    return dir.filePath(subdir);
 }
 
-// TODO: tr()
+auto tr(const char* str)
+{
+  return QCoreApplication::translate("SystemSound", str);
+}
+
+// TODO: https://doc.qt.io/archives/qt-5.15/i18n-source-translation.html#using-qt-tr-noop-and-qt-translate-noop-in-c
 const struct {
     QString name;
     QString hint;
 } SYSTEM_SOUNDS[] = {
-    {.name = QStringLiteral("Alarm Clock Elapsed"), .hint = QStringLiteral("alarm-clock-elapsed")},
-    {.name = QStringLiteral("Audio Volume Change"), .hint = QStringLiteral("audio-volume-change")},
-    {.name = QStringLiteral("Battery Caution"), .hint = QStringLiteral("battery-caution")},
-    {.name = QStringLiteral("Battery Full"), .hint = QStringLiteral("battery-full")},
-    {.name = QStringLiteral("Battery Low"), .hint = QStringLiteral("battery-low")},
-    {.name = QStringLiteral("Bell Window System"), .hint = QStringLiteral("bell-window-system")},
-    {.name = QStringLiteral("Bell"), .hint = QStringLiteral("bell")},
-    {.name = QStringLiteral("Button Pressed Modifier"), .hint = QStringLiteral("button-pressed-modifier")},
-    {.name = QStringLiteral("Button Pressed"), .hint = QStringLiteral("button-pressed")},
-    {.name = QStringLiteral("Complete Media Burn"), .hint = QStringLiteral("complete-media-burn")},
-    {.name = QStringLiteral("Complete Media Error"), .hint = QStringLiteral("complete-media-error")},
-    {.name = QStringLiteral("Completion Fail"), .hint = QStringLiteral("completion-fail")},
-    {.name = QStringLiteral("Completion Partial"), .hint = QStringLiteral("completion-partial")},
-    {.name = QStringLiteral("Completion Rotation"), .hint = QStringLiteral("completion-rotation")},
-    {.name = QStringLiteral("Completion Success"), .hint = QStringLiteral("completion-success")},
-    {.name = QStringLiteral("Desktop Login"), .hint = QStringLiteral("desktop-login")},
-    {.name = QStringLiteral("Desktop Logout"), .hint = QStringLiteral("desktop-logout")},
-    {.name = QStringLiteral("Device Added"), .hint = QStringLiteral("device-added")},
-    {.name = QStringLiteral("Device Removed"), .hint = QStringLiteral("device-removed")},
-    {.name = QStringLiteral("Dialog Error Critical"), .hint = QStringLiteral("dialog-error-critical")},
-    {.name = QStringLiteral("Dialog Error Serious"), .hint = QStringLiteral("dialog-error-serious")},
-    {.name = QStringLiteral("Dialog Error"), .hint = QStringLiteral("dialog-error")},
-    {.name = QStringLiteral("Dialog Information"), .hint = QStringLiteral("dialog-information")},
-    {.name = QStringLiteral("Dialog Question"), .hint = QStringLiteral("dialog-question")},
-    {.name = QStringLiteral("Dialog Warning Auth"), .hint = QStringLiteral("dialog-warning-auth")},
-    {.name = QStringLiteral("Dialog Warning"), .hint = QStringLiteral("dialog-warning")},
-    {.name = QStringLiteral("Game Over Loser"), .hint = QStringLiteral("game-over-loser")},
-    {.name = QStringLiteral("Game Over Winner"), .hint = QStringLiteral("game-over-winner")},
-    {.name = QStringLiteral("Media Insert Request"), .hint = QStringLiteral("media-insert-request")},
-    {.name = QStringLiteral("Message Attention"), .hint = QStringLiteral("message-attention")},
-    {.name = QStringLiteral("Message Contact In"), .hint = QStringLiteral("message-contact-in")},
-    {.name = QStringLiteral("Message Contact Out"), .hint = QStringLiteral("message-contact-out")},
-    {.name = QStringLiteral("Message Highlight"), .hint = QStringLiteral("message-highlight")},
-    {.name = QStringLiteral("Message New Instant"), .hint = QStringLiteral("message-new-instant")},
-    {.name = QStringLiteral("Message Sent Instant"), .hint = QStringLiteral("message-sent-instant")},
-    {.name = QStringLiteral("Outcome Failure"), .hint = QStringLiteral("outcome-failure")},
-    {.name = QStringLiteral("Outcome Success"), .hint = QStringLiteral("outcome-success")},
-    {.name = QStringLiteral("Phone Incoming Call"), .hint = QStringLiteral("phone-incoming-call")},
-    {.name = QStringLiteral("Power Plug"), .hint = QStringLiteral("power-plug")},
-    {.name = QStringLiteral("Power Unplug"), .hint = QStringLiteral("power-unplug")},
-    {.name = QStringLiteral("Service Login"), .hint = QStringLiteral("service-login")},
-    {.name = QStringLiteral("Service Logout"), .hint = QStringLiteral("service-logout")},
-    {.name = QStringLiteral("Theme Demo"), .hint = QStringLiteral("theme-demo")},
-    {.name = QStringLiteral("Trash Empty"), .hint = QStringLiteral("trash-empty")},
+    {.name = tr("Alarm Clock Elapsed"), .hint = QStringLiteral("alarm-clock-elapsed")},
+    {.name = tr("Audio Volume Change"), .hint = QStringLiteral("audio-volume-change")},
+    {.name = tr("Battery Caution"), .hint = QStringLiteral("battery-caution")},
+    {.name = tr("Battery Full"), .hint = QStringLiteral("battery-full")},
+    {.name = tr("Battery Low"), .hint = QStringLiteral("battery-low")},
+    {.name = tr("Bell Window System"), .hint = QStringLiteral("bell-window-system")},
+    {.name = tr("Bell"), .hint = QStringLiteral("bell")},
+    {.name = tr("Button Pressed Modifier"), .hint = QStringLiteral("button-pressed-modifier")},
+    {.name = tr("Button Pressed"), .hint = QStringLiteral("button-pressed")},
+    {.name = tr("Complete Media Burn"), .hint = QStringLiteral("complete-media-burn")},
+    {.name = tr("Complete Media Error"), .hint = QStringLiteral("complete-media-error")},
+    {.name = tr("Completion Fail"), .hint = QStringLiteral("completion-fail")},
+    {.name = tr("Completion Partial"), .hint = QStringLiteral("completion-partial")},
+    {.name = tr("Completion Rotation"), .hint = QStringLiteral("completion-rotation")},
+    {.name = tr("Completion Success"), .hint = QStringLiteral("completion-success")},
+    {.name = tr("Desktop Login"), .hint = QStringLiteral("desktop-login")},
+    {.name = tr("Desktop Logout"), .hint = QStringLiteral("desktop-logout")},
+    {.name = tr("Device Added"), .hint = QStringLiteral("device-added")},
+    {.name = tr("Device Removed"), .hint = QStringLiteral("device-removed")},
+    {.name = tr("Dialog Error Critical"), .hint = QStringLiteral("dialog-error-critical")},
+    {.name = tr("Dialog Error Serious"), .hint = QStringLiteral("dialog-error-serious")},
+    {.name = tr("Dialog Error"), .hint = QStringLiteral("dialog-error")},
+    {.name = tr("Dialog Information"), .hint = QStringLiteral("dialog-information")},
+    {.name = tr("Dialog Question"), .hint = QStringLiteral("dialog-question")},
+    {.name = tr("Dialog Warning Auth"), .hint = QStringLiteral("dialog-warning-auth")},
+    {.name = tr("Dialog Warning"), .hint = QStringLiteral("dialog-warning")},
+    {.name = tr("Game Over Loser"), .hint = QStringLiteral("game-over-loser")},
+    {.name = tr("Game Over Winner"), .hint = QStringLiteral("game-over-winner")},
+    {.name = tr("Media Insert Request"), .hint = QStringLiteral("media-insert-request")},
+    {.name = tr("Message Attention"), .hint = QStringLiteral("message-attention")},
+    {.name = tr("Message Contact In"), .hint = QStringLiteral("message-contact-in")},
+    {.name = tr("Message Contact Out"), .hint = QStringLiteral("message-contact-out")},
+    {.name = tr("Message Highlight"), .hint = QStringLiteral("message-highlight")},
+    {.name = tr("Message New Instant"), .hint = QStringLiteral("message-new-instant")},
+    {.name = tr("Message Sent Instant"), .hint = QStringLiteral("message-sent-instant")},
+    {.name = tr("Outcome Failure"), .hint = QStringLiteral("outcome-failure")},
+    {.name = tr("Outcome Success"), .hint = QStringLiteral("outcome-success")},
+    {.name = tr("Phone Incoming Call"), .hint = QStringLiteral("phone-incoming-call")},
+    {.name = tr("Power Plug"), .hint = QStringLiteral("power-plug")},
+    {.name = tr("Power Unplug"), .hint = QStringLiteral("power-unplug")},
+    {.name = tr("Service Login"), .hint = QStringLiteral("service-login")},
+    {.name = tr("Service Logout"), .hint = QStringLiteral("service-logout")},
+    {.name = tr("Theme Demo"), .hint = QStringLiteral("theme-demo")},
+    {.name = tr("Trash Empty"), .hint = QStringLiteral("trash-empty")},
 };
 
 auto getSoundThemes(const QDir &soundsDir) -> QStringList

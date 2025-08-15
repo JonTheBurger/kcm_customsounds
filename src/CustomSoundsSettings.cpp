@@ -9,22 +9,20 @@ K_PLUGIN_CLASS_WITH_JSON(CustomSoundsSettings, "kcm_customsounds.json") // NOLIN
 
 CustomSoundsSettings::CustomSoundsSettings(QObject *parent, const KPluginMetaData &data)
     : KQuickConfigModule(parent, data)
-    , m_statusText{QStringLiteral("TESTING")}
-    , m_themes{SystemSound::userThemes()}
-    , m_themesModel{m_themes}
-    , m_soundsModel{SystemSound::fromTheme(QStringLiteral("jon"))}
+    , m_themesModel{SystemSound::userThemes()} // TODO: Get current theme
+    , m_soundsModel{SystemSound::fromTheme(QStringLiteral(""))}
 {
     setButtons(Help);
 }
 
-auto CustomSoundsSettings::handleClick() -> void
+auto CustomSoundsSettings::setTheme(const QString &theme) -> void
 {
-    qWarning() << "handleClick()";
+    m_theme = theme;
 }
 
-auto CustomSoundsSettings::statusText() const -> QString
+auto CustomSoundsSettings::theme() const -> QString
 {
-    return m_statusText;
+    return m_theme;
 }
 
 auto CustomSoundsSettings::themes() -> QStringListModel *
@@ -35,6 +33,24 @@ auto CustomSoundsSettings::themes() -> QStringListModel *
 auto CustomSoundsSettings::sounds() -> SystemSoundModel *
 {
     return &m_soundsModel;
+}
+
+void CustomSoundsSettings::onLoadClicked()
+{
+    m_soundsModel.reset(SystemSound::fromTheme(theme()));
+}
+
+void CustomSoundsSettings::onSaveClicked()
+{
+    qWarning() << "onSaveClicked()";
+    // TODO: Save to disk
+}
+
+void CustomSoundsSettings::onDeleteClicked()
+{
+    qWarning() << "onDeleteClicked()";
+    // TODO: Remove from disk
+    // TODO: Remove from m_themesModel
 }
 
 #include "CustomSoundsSettings.moc"

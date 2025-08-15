@@ -1,74 +1,46 @@
-import QtMultimedia 6.5
 import QtQuick 6.5
-import QtQuick.Controls 6.5
-import QtQuick.Dialogs 6.5
 import QtQuick.Layouts 6.5
 import org.kde.kcmutils as KCMUtils
 import org.kde.kirigami 2.4 as Kirigami
 import org.kde.plasma.components 3.0 as PlasmaComponents
 
 KCMUtils.SimpleKCM {
-  property alias selectedId: copyStrategy.checkedButton
-
-  ButtonGroup {
-    id: copyStrategy
-    buttons: header.children
-  }
 
   ColumnLayout {
-    RowLayout {
-      id: header
 
-      PlasmaComponents.ToolButton {
-        icon.name: "document-open"
-        text: i18n("Load")
-        onClicked: {
-          console.log("Load")
-          kcm.handleClick()
-        }
-      }
+    RowLayout {
 
       PlasmaComponents.Label {
-        // text: i18n("Theme Name:")
-        text: kcm.statusText
+        text: i18n("Theme:")
       }
 
       PlasmaComponents.ComboBox {
-        id: themeName
-        editable: true
         Layout.fillWidth: true
-        validator: RegularExpressionValidator{ regularExpression: /[^/]+/ }
         model: kcm.themes
         textRole: "display"
+        editable: true
+        validator: RegularExpressionValidator{ regularExpression: /[^/]+/ }
         onEditTextChanged: {
-          console.log("Theme Name changed to: " + themeName.editText)
-          kcm.handleClick()
+          kcm.theme = this.currentText
         }
       }
 
-      PlasmaComponents.RadioButton {
-        text: i18n("Copy")
-        checked: true
-      }
-
-      PlasmaComponents.RadioButton {
-        text: i18n("Symlink")
-        checked: false
+      PlasmaComponents.ToolButton {
+        text: i18n("Load")
+        icon.name: "document-open"
+        onClicked: kcm.onLoadClicked()
       }
 
       PlasmaComponents.ToolButton {
-        icon.name: "document-save"
         text: i18n("Save")
-        onClicked: kcm.handleClick
+        icon.name: "document-save"
+        onClicked: kcm.onSaveClicked()
       }
 
       PlasmaComponents.ToolButton {
-        icon.name: "delete"
         text: i18n("Delete")
-        onClicked: {
-          console.log("Delete")
-          kcm.handleClick()
-        }
+        icon.name: "delete"
+        onClicked: kcm.onDeleteClicked()
       }
 
     }
@@ -88,7 +60,6 @@ KCMUtils.SimpleKCM {
         text: model.text
         file: model.file
         width: ListView.view.width
-        // anchors.margins: 4
       }
     }
 

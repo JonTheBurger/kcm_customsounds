@@ -8,6 +8,13 @@ SystemSoundModel::SystemSoundModel(std::vector<std::unique_ptr<SystemSound>> sou
 {
 }
 
+auto SystemSoundModel::reset(std::vector<std::unique_ptr<SystemSound>> sounds) -> void
+{
+    this->beginResetModel();
+    m_sounds = std::move(sounds);
+    this->endResetModel();
+}
+
 auto SystemSoundModel::rowCount(const QModelIndex &parent) const -> int
 {
     Q_UNUSED(parent);
